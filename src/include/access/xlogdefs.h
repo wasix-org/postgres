@@ -73,6 +73,8 @@ typedef uint16 RepOriginId;
  */
 #if defined(PLATFORM_DEFAULT_SYNC_METHOD)
 #define DEFAULT_SYNC_METHOD		PLATFORM_DEFAULT_SYNC_METHOD
+#elif defined(__wasi__)
+#define DEFAULT_SYNC_METHOD		SYNC_METHOD_OPEN_DSYNC
 #elif defined(O_DSYNC) && (!defined(O_SYNC) || O_DSYNC != O_SYNC)
 #define DEFAULT_SYNC_METHOD		SYNC_METHOD_OPEN_DSYNC
 #else

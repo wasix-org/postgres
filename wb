@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+set -eou
+
+cd src/interfaces/libpq
+make libpq.a

@@ -158,8 +158,10 @@ get_errno_symbol(int errnum)
 			return "EFAULT";
 		case EFBIG:
 			return "EFBIG";
+#ifndef __wasi__
 		case EHOSTDOWN:
 			return "EHOSTDOWN";
+#endif
 		case EHOSTUNREACH:
 			return "EHOSTUNREACH";
 		case EIDRM:

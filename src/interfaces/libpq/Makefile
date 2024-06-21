@@ -140,6 +140,14 @@ install: all installdirs install-lib
 	$(INSTALL_DATA) $(srcdir)/pqexpbuffer.h '$(DESTDIR)$(includedir_internal)'
 	$(INSTALL_DATA) $(srcdir)/pg_service.conf.sample '$(DESTDIR)$(datadir)/pg_service.conf.sample'
 
+wasix-install-headers-only: installdirs
+	$(INSTALL_DATA) $(srcdir)/libpq-fe.h '$(DESTDIR)$(includedir)'
+	$(INSTALL_DATA) $(srcdir)/libpq-events.h '$(DESTDIR)$(includedir)'
+	$(INSTALL_DATA) $(srcdir)/libpq-int.h '$(DESTDIR)$(includedir_internal)'
+	$(INSTALL_DATA) $(srcdir)/fe-auth-sasl.h '$(DESTDIR)$(includedir_internal)'
+	$(INSTALL_DATA) $(srcdir)/pqexpbuffer.h '$(DESTDIR)$(includedir_internal)'
+	$(INSTALL_DATA) $(srcdir)/pg_service.conf.sample '$(DESTDIR)$(datadir)/pg_service.conf.sample'
+
 test-build:
 	$(MAKE) -C test all
 
@@ -171,3 +179,11 @@ clean distclean: clean-lib
 
 maintainer-clean: distclean
 	$(MAKE) -C test $@
+
+libpq.a: $(OBJS)
+	rm -rf objs || true
+	mkdir objs
+	cp ../../common/*.o objs/
+	cp ../../port/*.o objs/
+	cp *.o objs/
+	llvm-ar rcs $@ objs/*.o

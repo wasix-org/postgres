@@ -118,6 +118,17 @@ extern void pgfnames_cleanup(char **filenames);
  * are actually reporting errors typically single out EPIPE and ECONNRESET,
  * while allowing the network failures to be reported generically.
  */
+#ifdef __wasi__
+#define ALL_CONNECTION_FAILURE_ERRNOS \
+	EPIPE: \
+	case ECONNRESET: \
+	case ECONNABORTED: \
+	case EHOSTUNREACH: \
+	case ENETDOWN: \
+	case ENETRESET: \
+	case ENETUNREACH: \
+	case ETIMEDOUT
+#else
 #define ALL_CONNECTION_FAILURE_ERRNOS \
 	EPIPE: \
 	case ECONNRESET: \
@@ -128,6 +139,7 @@ extern void pgfnames_cleanup(char **filenames);
 	case ENETRESET: \
 	case ENETUNREACH: \
 	case ETIMEDOUT
+#endif
 
 /* Portable locale initialization (in exec.c) */
 extern void set_pglocale_pgservice(const char *argv0, const char *app);
