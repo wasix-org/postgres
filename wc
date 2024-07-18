@@ -8,9 +8,12 @@ PHP_WASIX_DEPS="$(pwd)/../php-wasix-deps"
 ./configure --host=aarch64-apple-darwin \
   --without-icu \
   --without-readline \
-  --enable-static  \
+  --enable-static \
+  --with-ssl=openssl \
   PG_SYSROOT="$SYSROOT" \
   CC="clang-15 --target=wasm32-wasi --sysroot=$SYSROOT" \
+  RANLIB=llvm-ranlib-15 \
+  AR=llvm-ar-15 \
   CFLAGS="-matomics -mbulk-memory -mmutable-globals -pthread -mthread-model posix -ftls-model=local-exec \
     -fno-trapping-math -D_WASI_EMULATED_MMAN -D_WASI_EMULATED_SIGNAL -D_WASI_EMULATED_PROCESS_CLOCKS \
     -g -flto -O2 \
